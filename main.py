@@ -9,7 +9,14 @@ from dotenv import load_dotenv
 import uuid
 load_dotenv()
 os.environ['GROQ_API_KEY']=os.getenv('GROQ_API_KEY')
+os.environ['TAVILY_API_KEY']=os.getenv('TAVILY_API_KEY')
 
+from langchain_tavily import TavilySearch
+
+tavily_tool = TavilySearch(
+    max_results=5,
+    topic="general"
+)
 
 
 #used inbuilt tool of wikipedia
