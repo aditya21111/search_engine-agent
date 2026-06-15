@@ -26,7 +26,7 @@ api_wrapper_arxiv=ArxivAPIWrapper(top_k_results=1,doc_content_chars_max=250)
 arxiv=ArxivQueryRun(api_wrapper=api_wrapper_arxiv)
 search=DuckDuckGoSearchRun() 
 
-tools=[arxiv,search,wiki]
+tools=[search,wiki,tavily_tool,arxiv]
 
 
 
