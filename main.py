@@ -63,19 +63,33 @@ if prompt:=st.chat_input(placeholder='what is machine learning'):
     st.chat_message('user').write(prompt)
 
     
-    with st.chat_message('assistant'):
-        st_cb=StreamlitCallbackHandler(st.container(),expand_new_thoughts=True)
-        response = agent.invoke(
-    {
-        "messages": [
-            ("user", f"{prompt}")
-        ]
-    },
-    config={"configurable": {"thread_id": st.session_state.thread_id},'callbacks':[st_cb]}
-)
+with st.chat_message("assistant"):
+    
+    placeholder = st.empty()
+    final_response = ""
 
-    st.chat_message('ai').write(response['messages'][-1].content)
-    st.session_state.messages.append({'role':'ai','content':response['messages'][-1].content})
+    for chunk in agent.stream(
+        {
+            "messages": [("user", prompt)]
+        },
+        config={
+            "configurable": {
+                "thread_id": st.session_state.thread_id
+            }
+        },
+        stream_mode="values"
+    ):
+        
+        if "messages" in chunk:
+            msg = chunk["messages"][-1]
+
+            if hasattr(msg, "content") and msg.content:
+                final_response = msg.content
+                placeholder.markdown(final_response)
+
+    st.session_state.messages.append(
+        {"role": "assistant", "content": final_response}
+    )
     
     
 
