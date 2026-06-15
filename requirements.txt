@@ -2102,4 +2102,3 @@ zstandard==0.25.0 \
     --hash=sha256:fd7a5004eb1980d3cefe26b2685bcb0b17989901a70a1040d1ac86f1d898c551
     # via langsmith
 
-mypy-extensions
