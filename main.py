@@ -14,7 +14,7 @@ os.environ['GROQ_API_KEY']=os.getenv('GROQ_API_KEY')
 # from langchain.agents import load_tools 
 
 # New working import:
-from langchain_community.agent_toolkits import load_tools
+from langchain_community.agent_toolkits.load_tools import load_tools
 
 arxiv_tools = load_tools(
     ["arxiv"],
