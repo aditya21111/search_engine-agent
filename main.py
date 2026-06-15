@@ -10,13 +10,30 @@ import uuid
 load_dotenv()
 os.environ['GROQ_API_KEY']=os.getenv('GROQ_API_KEY')
 
+from langchain.agents import load_tools
+
+arxiv_tools = load_tools(
+    ["arxiv"],
+    arxiv_top_k_results=1,
+    arxiv_doc_content_chars_max=250
+)
+arxiv = arxiv_tools[0]
+
+wiki_tools = load_tools(
+    ["wikipedia"],
+    wiki_top_k_results=1,
+    wiki_doc_content_chars_max=250
+)
+wiki = wiki_tools[0]
+
+
+
 
 #used inbuilt tool of wikipedia
-api_wrapper_wiki=WikipediaAPIWrapper(top_k_results=1,doc_content_chars_max=250)
-wiki=WikipediaQueryRun(api_wrapper=api_wrapper_wiki)
-api_wrapper_arxiv=ArxivAPIWrapper(top_k_results=1,doc_content_chars_max=250)
-arxiv=ArxivQueryRun(api_wrapper=api_wrapper_arxiv)
-search=DuckDuckGoSearchRun()
+#api_wrapper_wiki=WikipediaAPIWrapper(top_k_results=1,doc_content_chars_max=250)
+#wiki=WikipediaQueryRun(api_wrapper=api_wrapper_wiki)
+##arxiv=ArxivQueryRun(api_wrapper=api_wrapper_arxiv)
+search=DuckDuckGoSearchRun() 
 
 tools=[arxiv,search,wiki]
 
